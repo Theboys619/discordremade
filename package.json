@@ -4,7 +4,8 @@
   "description": "New unblocked Discord",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "postcss public/stylesheets/tailwind.css -o public/build/tailwind.css"
   },
   "author": "Theboys619",
   "license": "ISC",

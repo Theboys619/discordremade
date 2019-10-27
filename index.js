@@ -43,7 +43,7 @@ app.get('/imgs/privatechat.png', function (req, res) {
 	res.sendFile('/imgs/privatechat.png', {root: '.'});
 });
 
-app.get('/public/stylesheets/tailwind.css', function (req, res) {
+app.get('/public/build/tailwind.css', function (req, res) {
   res.sendFile('/public/build/tailwind.css', {root: '.'});
 });
 

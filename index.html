@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyACaQWtVrztG0go-ZmePPvUwBGPbuOuAUI",
+    authDomain: "discord2-4b96d.firebaseapp.com",
+    databaseURL: "https://discord2-4b96d.firebaseio.com",
+    projectId: "discord2-4b96d",
+    storageBucket: "discord2-4b96d.appspot.com",
+    messagingSenderId: "857957305592",
+    appId: "1:857957305592:web:688118018f6745a636ff0d"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+<head>
+	<title>Private Chatroom 2</title>
+	<link rel="icon" href="/imgs/favicon.ico" type="image/x-icon">
+</head>
+<body>
+	<style>
+
+		body {
+			background-image: url("/imgs/BGImg.png");
+		}
+
+		fieldset {
+			padding: 5px 10px;
+			opacity: .85;
+		}
+
+		#name, #pass, #rpass, #name2, #pass2 {
+			width: 100%;
+  		padding: 12px 20px;
+  		margin: 8px 0;
+  		display: inline-block;
+ 	 		border: 1px solid #ccc;
+ 	 		border-radius: 4px;
+  		box-sizing: border-box;
+		}
+		#loginbutton, #signupbutton {
+			background-color: #4CAF50;
+  		color: white;
+ 	 		padding: 14px 20px;
+ 		  margin: 8px 0;
+  		border: none;
+  		cursor: pointer;
+  		width: 100%;
+		}
+		#loginbutton:hover, #signupbutton:hover {
+			opacity: 0.85;
+		}
+		.enjoy-css {
+			-webkit-box-sizing: content-box;
+			-moz-box-sizing: content-box;
+			box-sizing: content-box;
+			float: right;
+			width: 150px;
+			height: 100px;
+			margin: -350px 50px 0 0;
+			padding: 20px;
+			border: 4px solid rgba(32,58,188,1);
+			-webkit-border-radius: 28px;
+			border-radius: 28px;
+			font: normal 16px/1 "Times New Roman", Times, serif;
+			color: black;
+			-o-text-overflow: ellipsis;
+			text-overflow: ellipsis;
+			background: rgba(35,94,196,0.91);
+			-webkit-box-shadow: -5px 8px 4px 2px rgba(16,33,183,0.4) ;
+			box-shadow: -5px 8px 4px 2px rgba(16,33,183,0.4) ;
+			text-shadow: -3px 3px 2px rgba(0,0,0,0.5) ;
+			-webkit-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+			-moz-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+			-o-transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+			transition: all 200ms cubic-bezier(0.42, 0, 0.58, 1) 10ms;
+		}
+	</style>
+	<div id="loginform">
+		<form id="Login" class="form-horizontal">
+			<fieldset style="background-color: #F5FAFA;">
+
+			<!-- Form Name -->
+			<legend>Login</legend>
+
+			<!-- Text input-->
+				<div class="form-group">
+					<label class="col-md-2 control-label" for="name"><b>Username</b></label>
+					<div class="col-md-2">
+						<input id="name" name="name" type="text" placeholder="Enter Username" class="form-control input-md rounded-lg" required="">
+					</div>
+				</div>
+
+				<!-- Password input-->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="pass"><b>Password Input</b></label>
+					<div class="col-md-4">
+						<input id="pass" name="pass" type="password" placeholder="Enter Password" class="form-control input-md" required="">
+					</div>
+				</div>
+
+				<!-- Button -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="loginbutton"></label>
+					<div class="col-md-4">
+						<button id="loginbutton" name="loginbutton" class="btn btn-success rounded-lg">Login</button>
+					</div>
+				</div>
+			</fieldset>
+			</form>
+	</div>
+	<div id="signupform">
+		<form id="Signup">
+			<fieldset style="background-color: #F5FAFA;">
+
+			<!-- Form Name -->
+			<legend>SignUp</legend>
+
+			<!-- Text input-->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="name"><b>Username</b></label>
+					<div class="col-md-4">
+						<input id="name2" name="name2" type="text" placeholder="Enter Username" class="form-control input-md" required="">
+					</div>
+				</div>
+
+				<!-- Password input-->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="pass"><b>Password</b></label>
+					<div class="col-md-4">
+						<input id="pass2" name="pass2" type="password" placeholder="Enter Password" class="form-control input-md" required="">
+					</div>
+				</div>
+
+				<!-- Retype Password -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="pass"><b>Retype Password</b></label>
+					<div class="col-md-4">
+						<input id="rpass" name="rpass" type="password" placeholder="Retype Password" class="form-control input-md" required="">
+						<span id="donot" style="display: none;"><font color="red">Passwords do Not Match</font></span>
+					</div>
+				</div>
+
+				<!-- Button -->
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="loginbutton"></label>
+					<div class="col-md-4">
+						<button id="signupbutton" name="signupbutton" class="btn btn-success rounded-lg">SignUp</button>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	<div id="chat" style="display: none;">
+		<div style="text-align: center;"><img src="/imgs/privatechat.png" alt="PrivateChat"></div>
+		<div id="chat-text" style="background-color: null;width:1100px;height:400px;overflow-y:scroll;display:block">
+			<div>Hello! Type In The Box Below To Chat!!</div>
+		</div>
+		<form id="text">
+			<input id="message" type="text" placeholder="Enter a Message" required>
+			<input id="dm" type="text" placeholder="Enter User for Direct Chatting">
+
+			<button type="submit" style="display: none;"></button>
+		</form>
+		<form id="roomform">
+			<label><strong>Room</strong></label>
+			<input id="room" type="text" placeholder="Enter Room, Leave Blank For Global" style="width:250px" class="py-4 px-4 bg-gray-400">
+		</form>
+		<button id="leaveroom">Leave Room</button>
+
+		<form id="uploadimage" action="/upload" method="post" enctype="multipart/form-data">
+			<p><b>Upload Image:</b></p>
+
+			<p id="postmsg">{{ message }}</p>
+			<input type="file" id="fileElem" accept="image/*" name="image">
+			<input type="submit" value="Upload">
+		</form>
+
+		<div>
+			<button id="playpong" onclick="playpingpong()">Play Ping Pong</button>
+			<div id="ping" class="pong" style="display: none; position: absolute; bottom: 300; left: 600;">
+
+			</div>
+		</div>
+
+		<div class="enjoy-css"><center><b>Online Users:</b></center><div id="Users"></div><div style="text-align: center"><b>Online Friends:</b></div><div id="FriendsOnline"></div></div>
+	</div>
+</body>
+<script>
+	var socket = io.connect('https://chattest--theboys619.repl.co');
+	/*
+	0: Something
+	1: Something
+	2: Server Wipe
+	*/
+	var onrun = 0;
+
+	var chat = document.getElementById("chat");
+	var loginform = document.getElementById("loginform");
+	var login = document.getElementById("Login");
+	var user = document.getElementById("name");
+	var pass = document.getElementById("pass");
+	var connected = document.getElementById('Users');
+	var dm = document.getElementById('dm');
+	var roomform = document.getElementById('roomform');
+	var room = document.getElementById('room');
+	var leaveroom = document.getElementById('leaveroom');
+	var signupform = document.getElementById('signupform');
+	var signup = document.getElementById('Signup');
+	var user2 = document.getElementById("name2");
+	var pass2 = document.getElementById("pass2");
+	var retyped = document.getElementById("rpass");
+	var chatText = document.getElementById('chat-text');
+	var textform = document.getElementById('text');
+	var message = document.getElementById('message');
+	var onlinefriends = document.getElementById('FriendsOnline');
+	var canvasping = document.getElementById('ping');
+
+	var uploadmessage = new Vue({
+		el: '#postmsg',
+		data: {
+			message: ""
+		}
+	});
+
+	var imageform = document.getElementById('uploadimage');
+	var username = "";
+	var inroom = "";
+	var friends = [];
+	var limage = "whitespace";
+	var uploaddone = false;
+	var timer;
+
+	/*
+	Representation:
+	Set data: database.ref().set();
+	Listen to data: database.ref().OnWrite();
+	Update data:
+	var updates = {};
+	updates["path"] = data;
+	database.ref("path").update(updates)
+
+	*/
+	if (onrun == 0) {
+
+	} else if (onrun == 1) {
+
+	} else if (onrun == 2) {
+		alert('There has been a Server wipe.\nPlease register again.');
+	}
+
+	imageform.onsubmit = function(e) {
+		socket.emit('OnImageUp', username);
+	};
+
+	login.onsubmit = function(e) {
+		e.preventDefault();
+
+		socket.emit("Login", user.value, pass.value);
+		user.value = "";
+		pass.value = "";
+	};
+
+	signup.onsubmit = function(e) {
+		e.preventDefault();
+		if (retyped.value === pass2.value) {
+			socket.emit('Register Account', user2.value, pass2.value);
+			user2.value = "";
+			pass2.value = "";
+			rpass.value = "";
+			document.getElementById('donot').style = "text-color: red; display: none;"
+		} else {
+			document.getElementById('donot').style = "text-color: red; display: block;"
+		}
+	}
+
+	leaveroom.onclick = function() {
+		socket.emit("JoinRoom", username, room.value, 'true');
+		inroom = '';
+	}
+
+	socket.on("Connect", function(user) {
+		username = user;
+		alert("Access Success!");
+		chat.style = "display: block;"
+		loginform.style = "display: none;"
+		signupform.style = "display: none;"
+	});
+	socket.on("Login Failed", function() {
+		alert("Login Failed - Username or Password is incorrect...");
+	});
+
+	roomform.onsubmit = function(e) {
+		e.preventDefault();
+		socket.emit("JoinRoom", username, room.value, "false");
+	}
+
+	textform.onsubmit = function(e) {
+		e.preventDefault();
+		if (message.value.startsWith("/")) {
+			commands(message.value, username);
+		} else {
+			if (inroom != '') {
+				if (dm.value === "") {
+					socket.emit('SendGroupMessage', username, message.value);
+					message.value = '';
+				} else {
+					socket.emit('SendPMessageToServer', username, message.value, dm.value, room.value);
+					message.value = '';
+				}
+			} else {
+				if (dm.value === "") {
+					socket.emit('SendMessageToServer', username, message.value, room.value);
+					message.value = '';
+				} else {
+					socket.emit('SendPMessageToServer', username, message.value, dm.value, room.value);
+					message.value = '';
+				}
+			}
+		}
+	};
+
+	socket.on("SendMessageToClients", function(user, msg) {
+		chatText.innerHTML += '<div>' + user + ": " + msg + '</div>';
+		chatText.scrollTop = chatText.scrollHeight;
+	});
+
+	socket.on("SendPMessage", function(user, msg) {
+		chatText.innerHTML += '<div>' + "Direct Message from " + user + ": " + msg + '</div>';
+		chatText.scrollTop = chatText.scrollHeight;
+	});
+
+	socket.on("SendMessageToGroup", function(user, msg) {
+		chatText.innerHTML += '<div>' + "Group Message from " + user + ": " + msg + '</div>';
+		chatText.scrollTop = chatText.scrollHeight;
+	});
+
+	socket.on("Image", function(image) {
+		limage = image;
+	});
+
+	socket.on("UploadImage", function(user) {
+		function imagefunc() {
+			console.log(limage);
+			uploadmessage.message = "Uploading...";
+			if (limage != "whitespace") {
+				chatText.innerHTML += `<div>${user}: <img src='${limage}'></img></div>`;
+				chatText.scrollTop = chatText.scrollHeight;
+				limage = "whitespace";
+				clearInterval(timer);
+				timer = 0;
+				uploadmessage.message = "Upload Successful!";
+			}
+		}
+		timer = setInterval(imagefunc, 500)
+	});
+
+	socket.on("JoinedRoom", function(roomed) {
+		inroom = roomed;
+		alert("Successfully Joined Room " + inroom + "!");
+	});
+
+	socket.on("Error", function(errortype, msg, user) {
+		if (errortype === "Unknown User") {
+			chatText.innerHTML += '<div>' + "Server: " + msg + '</div>';
+			chatText.scrollTop = chatText.scrollHeight;
+		} else if (errortype === "Login Fail") {
+			alert(msg);
+		} else if (errortype === "Successful Register") {
+			alert(msg);
+		} else if (errortype === "Alert") {
+			alert(msg);
+		} else if (errortype === "Friend") {
+			alert(msg);
+		} else if (errortype === "Disconnect") {
+			chatText.innerHTML += `<div>Server: ${msg}</div>`;
+			alert(msg);
+		}
+	});
+
+	socket.on("SendCachedData", function(users, messages) {
+
+		for (var i = 0; i < users.length; i++) {
+			chatText.innerHTML += '<div>' + `${users[i]}: ${messages[i]}` + '</div>';
+			chatText.scrollTop = chatText.scrollHeight;
+		}
+	});
+
+	socket.on("GetUsers", function(users, friends) {
+		var online = false;
+
+		for (var i = 0; i < users.length; i++) {
+			users[i] = " " + users[i]
+		}
+
+		connected.innerHTML = users;
+	});
+
+	socket.on('disconnect', function(reason) {
+		alert(`You have been disconnected due to ${reason}`);
+		document.location.reload();
+	});
+
+	socket.on("GetRooms", function(rooms) {
+		for (var i = 0; i < rooms.length; i++) {
+			rooms[i] = " " + rooms[i]
+		}
+	});
+
+	window.onbeforeunload = function (e) {
+		return;
+	}
+
+	function commands(msg, user) {
+		const args = msg.slice(1).trim().split(/\s+/g);
+		const command = args.shift().toLowerCase();
+
+		/* Change this code \/ to use database for admins */
+		if (user === "Mason") {
+			socket.emit("commands", command, args);
+		} else {
+			alert('You do not have access to use commands!')
+		}
+	}
+
+	var player1 = {
+		username: "Player1",
+		speed: 5,
+		x: 15,
+		y: 225,
+		w: 10,
+		h: 55
+	}
+	var player2 = {
+		username: "No-One",
+		speed: 5,
+		x: 475,
+		y: 225,
+		w: 10,
+		h: 55
+	}
+
+	var ball = {
+		xspeed: 4,
+		yspeed: 4,
+		diameter: 18,
+		x: 250,
+		y: 250
+	}
+
+	var resx = 500;
+	var resy = 500;
+	var startedgame = false;
+	var screen = "mainmenu";
+
+	var roomnum = 0;
+
+	var score1 = 0;
+	var score2 = 0;
+
+	var host = false;
+
+	var button;
+	var button2;
+	var button3;
+	var button4;
+	var button5;
+	var input;
+	var input2;
+	var input3;
+	var input4;
+
+	var canvs;
+
+	function setup() {
+		canvs = createCanvas(resx, resy).id('canvasboi');
+		canvs.parent("ping");
+		canvs.attribute("tabindex", "0");
+		button = createButton("Create Room").parent("ping").hide();
+		button2 = createButton("Join Room").parent("ping").hide();
+		button3 = createButton('Copy Code').parent("ping").hide();
+		button4 = createButton('Join').parent("ping").hide();
+		button5 = createButton('Start Game').parent("ping").hide();
+		input = createInput('Username', 'text').parent("ping").hide();
+		input2 = createInput('','text').parent("ping").hide();
+		input3 = createInput('','text').parent("ping").hide();
+		input4 = createInput('','text').parent("ping").hide();
+	}
+
+	function draw() {
+		background(0);
+		canvs.mousePressed(focusing);
+
+		if (startedgame == true) {
+			button.hide();
+			button2.hide();
+			button3.hide();
+			button4.hide();
+			button5.hide();
+			input.hide();
+			input2.hide();
+			input3.hide();
+			input4.hide()
+			fill(255);
+		}
+
+		if (screen === "mainmenu") {
+			fill(255);
+			textSize(34);
+			text("PING PONG", 165, 100);
+			button.position(215,245);
+			button.show();
+			button.mousePressed(lobby);
+			button2.show();
+			button2.position(220, 210);
+			button2.mousePressed(joinroom);
+		} else if (screen === "lobby") {
+			host = true;
+			fill(255)
+			textSize(16);
+			player1.username = input.value();
+			text(`Your room # is: ${roomnum}`, 185, 50);
+			text("Player 1:", 225, 140);
+			text("Player 2:", 225, 200);
+			textSize(12);
+			// (0, 200, 0) for Online
+			if (player2.username === "No-One") {
+				fill(200,0,0);
+			} else {
+				fill(0,200,0);
+			}
+			text(player2.username, 235, 230);
+			fill(255);
+			input2.value(roomnum);
+			input2.id('roomtext');
+			button5.position(215, 250);
+			button3.position(220, 75);
+			button3.mousePressed(copytext);
+			button5.mousePressed(startgame);
+			socket.emit("HostInfo", player1.username, roomnum);
+		} else if (screen === "roomjoin") {
+			textSize(15);
+			text("Room Code:", 205, 180);
+			button4.position(230, 230);
+			button4.mousePressed(joingame);
+		} else if (screen === "lobby2") {
+			player2.username = input4.value();
+			fill(255);
+			textSize(16);
+			text(`Your room # is: ${roomnum}`, 185, 50);
+			text("Player 1:", 225, 140);
+			text("Player 2:", 225, 200)
+			textSize(12);
+			fill(0,200,0);
+			text(player1.username, 235, 170);
+			fill(255);
+			socket.emit("ClientInfo", player2.username, roomnum);
+		}
+
+		function copytext() {
+			var roomtext = document.getElementById('roomtext');
+			roomtext.select();
+			roomtext.setSelectionRange(0, 99999);
+			document.execCommand("copy");
+		}
+
+		function lobby() {
+			screen = "lobby";
+			button.hide();
+			button2.hide();
+			button3.show();
+			button4.hide();
+			button5.show();
+			input.show();
+			input2.show();
+			input3.hide();
+			input4.hide();
+			roomnum = Math.round(Math.random() * 500000);
+			roomnum = roomnum.toString(24);
+			input.position(160, 150).id('username');
+			input2.position(160, 5);
+			socket.emit("CreateGRoom", roomnum);
+		}
+
+		function joinroom() {
+			screen = "roomjoin";
+			button.hide();
+			button2.hide();
+			button3.hide();
+			button4.show();
+			button5.hide();
+			input.hide();
+			input2.hide();
+			input3.show();
+			input4.hide();
+			input3.position(150, 210);
+		}
+
+		function joingame() {
+			host = false;
+			socket.emit('JoinGameRoom', input3.value());
+			screen = "lobby2";
+			button.hide();
+			button2.hide();
+			button3.hide();
+			button4.hide();
+			button5.hide();
+			roomnum = input3.value();
+			input.hide();
+			input2.hide();
+			input3.hide();
+			input4.show();
+			input4.position(160, 200);
+		}
+
+		function focusing() {
+			document.getElementById("canvasboi").focus();
+		}
+
+		function startgame() {
+			screen = "game";
+			socket.emit('StartedGame', screen, roomnum);
+			startedgame = true;
+		}
+
+		socket.on("Host2Client", function(hostname) {
+			if (host == false) {
+				player1.username = hostname;
+			}
+		});
+
+		socket.on("Client2Host", function(clientname) {
+			if (host == true) {
+				player2.username = clientname;
+			}
+		});
+
+		socket.on("ClientUpdate", function(type, value, p1x, p1y, ballx, bally, score, score3) {
+			if (host == false) {
+				if (type === "switchscreen") {
+					screen = value;
+					if (screen === "game") {
+						startedgame = true;
+					}
+				} else if (type === "Game") {
+					player1.x = p1x;
+					player1.y = p1y;
+					ball.x = ballx;
+					ball.y = bally;
+					score1 = score;
+					score2 = score3;
+				}
+			}
+		});
+
+		function reset() {
+
+			player1.x = 15;
+			player1.y = 225;
+			player1.w = 10;
+			player1.h = 55;
+
+			player2.x = 475;
+			player2.y = 225;
+			player2.w = 10;
+			player2.h = 55;
+
+			ball.x = 250;
+			ball.y = 250;
+
+			text(`Score: ${score1}`, 100, 20);
+			text(`Score: ${score2}`, 355, 20);
+
+		}
+		if (startedgame == true) {
+			stroke(255,255,255);
+			strokeWeight(2);
+			line(250,0,250,45);
+			line(250,75,250,120);
+			line(250,145,250,190);
+			line(250,215,250,260);
+			line(250,285,250,330);
+			line(250,355,250,400);
+			line(250,425,250,470);
+			line(250,495,250,500);
+
+			rect(player1.x,player1.y,player1.w,player1.h);
+			rect(player2.x,player2.y,player2.w,player2.h);
+
+			ellipse(ball.x,ball.y,ball.diameter,ball.diameter);
+
+			strokeWeight(1);
+			stroke(0);
+			text(`Score: ${score1}`, 100, 20);
+			text(`Score: ${score2}`, 355, 20);
+
+			if (host == true) {
+				socket.emit("GameUpdate", host, player1.x, player1.y, ball.x, ball.y, score1, score2, roomnum);
+				ball.x += ball.xspeed;
+				ball.y += ball.yspeed;
+
+				if (ball.x < ball.diameter/2) {
+					score2++
+					reset();
+				} else if (ball.x > resx - 0.5*ball.diameter) {
+					score1++;
+					reset();
+				}
+
+				if (ball.y < ball.diameter/2 || ball.y > resy - 0.5*ball.diameter) {
+					ball.yspeed *= -1;
+				}
+
+				if ((ball.x < player1.x + player1.w + ball.diameter/2 && ball.y >= player1.y && ball.y <= player1.y + player1.h)) {
+					ball.xspeed = -ball.xspeed;
+				}
+				if ((ball.x > player2.x - player2.w) && ( ball.y >= player2.y && ball.y <= player2.y + player2.h)) {
+					ball.xspeed = -ball.xspeed;
+				}
+			}
+
+			// Player 1 Inputs
+			if (host == true) {
+				if (keyIsDown(87)) {
+					player1.y -= player1.speed;
+				} else if (keyIsDown(83)) {
+					player1.y += player1.speed;
+				}
+			}
+
+			// Player 2 Inputs
+			if (host == false) {
+				if (keyIsDown(UP_ARROW)) {
+					player2.y -= player2.speed;
+				} else if (keyIsDown(DOWN_ARROW)) {
+					player2.y += player2.speed;
+				}
+				socket.emit("GameUpdate", host, player2.x, player2.y, "", "", "", "", roomnum)
+			}
+
+			socket.on("HostUpdate", function(type, value, p2x, p2y) {
+				if (host == true) {
+					if (type === "Game") {
+						player2.x = p2x;
+						player2.y = p2y;
+					}
+				}
+			});
+
+		}
+	}
+
+	window.addEventListener("keydown", function(e) {
+		// space and arrow keys
+		if([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+				e.preventDefault();
+		}
+	}, false);
+
+	function playpingpong() {
+		canvasping.style = "position: absolute; top: 210px; left: 500px;";
+	}
+</script>
+</html>

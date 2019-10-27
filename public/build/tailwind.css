@@ -599,6 +599,10 @@ video {
   height: auto;
 }
 
+.flex-basis-100p {
+  flex-basis: 100%;
+}
+
 .container {
   width: 100%;
 }

@@ -3,7 +3,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var firebase = require('firebase');
 var multer = require('multer');
-var port = 65515;
+var port = 5000;
 
 var firebaseConfig = {
     apiKey: "AIzaSyACaQWtVrztG0go-ZmePPvUwBGPbuOuAUI",

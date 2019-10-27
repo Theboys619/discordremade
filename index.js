@@ -26,7 +26,7 @@ var connections = [];
 var database = firebase.database();
 
 app.get('/', function (req, res) {
-	res.sendFile('/index.html', {root: '.'})
+	res.sendFile(__dirname + '/index.html')
 });
 
 //Upload File Images

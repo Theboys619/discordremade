@@ -32,7 +32,7 @@ app.get('/', function (req, res) {
 //Upload File Images
 
 app.get('/imgs/favicon.ico', function (reg, res) {
-	res.sendFile('/imgs/favicon.ico', {root: '.'});
+	res.sendFile(__dirname + '/imgs/favicon.ico');
 });
 
 app.get('/imgs/BGImg.png', function (req, res) {

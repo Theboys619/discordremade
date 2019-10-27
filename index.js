@@ -274,6 +274,6 @@ io.on('connection', function (socket) {
 
 });
 
-server.listen((process.env.PORT || port, function(){
+server.listen(process.env.PORT || port, function(){
   console.log('listening on *:' + port);
 });

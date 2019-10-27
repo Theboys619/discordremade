@@ -47,6 +47,10 @@ app.get('/public/build/tailwind.css', function (req, res) {
   res.sendFile('/public/build/tailwind.css', {root: '.'});
 });
 
+app.get('/imgs/icon_discord.svg', function (req,  res) {
+  res.sendFile('/imgs/icon_discord.svg', {root: '.'});
+});
+
 // Start of Uploading
 var path = require('path');
 

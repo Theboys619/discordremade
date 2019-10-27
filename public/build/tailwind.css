@@ -1107,6 +1107,10 @@ video {
   background-color: #4a5568;
 }
 
+.hover\:bg-gray-750:hover {
+  background-color: #cbd5e0;
+}
+
 .hover\:bg-gray-800:hover {
   background-color: #2d3748;
 }
@@ -11882,6 +11886,10 @@ video {
     background-color: #4a5568;
   }
 
+  .sm\:hover\:bg-gray-750:hover {
+    background-color: #cbd5e0;
+  }
+
   .sm\:hover\:bg-gray-800:hover {
     background-color: #2d3748;
   }
@@ -22286,6 +22294,10 @@ video {
     background-color: #4a5568;
   }
 
+  .md\:bg-gray-750 {
+    background-color: #cbd5e0;
+  }
+
   .md\:bg-gray-800 {
     background-color: #2d3748;
   }
@@ -22658,6 +22670,10 @@ video {
     background-color: #4a5568;
   }
 
+  .md\:hover\:bg-gray-750:hover {
+    background-color: #cbd5e0;
+  }
+
   .md\:hover\:bg-gray-800:hover {
     background-color: #2d3748;
   }
@@ -23028,6 +23044,10 @@ video {
 
   .md\:focus\:bg-gray-700:focus {
     background-color: #4a5568;
+  }
+
+  .md\:focus\:bg-gray-750:focus {
+    background-color: #cbd5e0;
   }
 
   .md\:focus\:bg-gray-800:focus {
@@ -33432,6 +33452,10 @@ video {
 
   .lg\:hover\:bg-gray-700:hover {
     background-color: #4a5568;
+  }
+
+  .lg\:hover\:bg-gray-750:hover {
+    background-color: #cbd5e0;
   }
 
   .lg\:hover\:bg-gray-800:hover {
@@ -44208,6 +44232,10 @@ video {
 
   .xl\:hover\:bg-gray-700:hover {
     background-color: #4a5568;
+  }
+
+  .xl\:hover\:bg-gray-750:hover {
+    background-color: #cbd5e0;
   }
 
   .xl\:hover\:bg-gray-800:hover {

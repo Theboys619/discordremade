@@ -728,8 +728,8 @@
 					message.value = '';
 				}
 			} else {
-				if (dm.value === "") {
-					socket.emit('SendMessageToServer', username, message.value, room.value);
+				if (true/*dm.value === ""*/) {
+					socket.emit('SendMessageToServer', username, message.value, ""/*room.value*/);
 					message.value = '';
 				} else {
 					socket.emit('SendPMessageToServer', username, message.value, dm.value, room.value);

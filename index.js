@@ -43,8 +43,8 @@ app.get('/imgs/privatechat.png', function (req, res) {
 	res.sendFile('/imgs/privatechat.png', {root: '.'});
 });
 
-app.get('/public/stylesheets/style.css', function (req, res) {
-  res.sendFile('/public/stylesheets/style.css', {root: '.'});
+app.get('/public/stylesheets/tailwind.css', function (req, res) {
+  res.sendFile('/public/stylesheets/tailwind.css', {root: '.'});
 });
 
 // Start of Uploading

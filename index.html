@@ -340,7 +340,7 @@
                       </div>
                       <div class="flex-1 flex justify-between">
                           <div class="bg-gray-750 flex-1 flex flex-col justify-between">
-                              <div class="chat text-sm text-gray-400 overflow-y-auto">
+                              <div id="chat-text" class="chat text-sm text-gray-400 overflow-y-auto">
                                   <div class="flex mx-6 my-3 py-4 border-t border-gray-700">
                                       <div class="flex-none">
                                           <a href="#"><img src="/avatar.jpg" alt="avatar" class="w-10 h-10 rounded-full"></a>
@@ -468,7 +468,10 @@
                                       </svg>
                                   </button>
                                   <div class="flex-1">
-                                      <input type="text" class="w-full text-sm h-10 px-2 py-2 bg-gray-700 text-gray-200 focus:outline-none">
+                                    <form id="text">
+                                      <input id="message" type="text" class="w-full text-sm h-10 px-2 py-2 bg-gray-700 text-gray-200 focus:outline-none">
+                                      <input type="submit" style="display: none;">
+                                    </form>
                                   </div>
                                   <div class="px-2 py-2 bg-gray-700 rounded-r flex items-center h-10">
                                       <button class="h-10 bg-gray-700 rounded-l text-gray-500 hover:text-white">
@@ -615,11 +618,11 @@
 	var login = document.getElementById("Login");
 	var user = document.getElementById("name");
 	var pass = document.getElementById("pass");
-	var connected = document.getElementById('Users');
-	var dm = document.getElementById('dm');
-	var roomform = document.getElementById('roomform');
-	var room = document.getElementById('room');
-	var leaveroom = document.getElementById('leaveroom');
+	//var connected = document.getElementById('Users');
+	//var dm = document.getElementById('dm');
+	//var roomform = document.getElementById('roomform');
+	//var room = document.getElementById('room');
+	//var leaveroom = document.getElementById('leaveroom');
 	var signupform = document.getElementById('signupform');
 	var signup = document.getElementById('Signup');
 	var user2 = document.getElementById("name2");
@@ -628,7 +631,7 @@
 	var chatText = document.getElementById('chat-text');
 	var textform = document.getElementById('text');
 	var message = document.getElementById('message');
-	var onlinefriends = document.getElementById('FriendsOnline');
+	//var onlinefriends = document.getElementById('FriendsOnline');
 	var canvasping = document.getElementById('ping');
 
 	var uploadmessage = new Vue({
@@ -664,9 +667,9 @@
 		alert('There has been a Server wipe.\nPlease register again.');
 	}
 
-	imageform.onsubmit = function(e) {
-		socket.emit('OnImageUp', username);
-	};
+	// imageform.onsubmit = function(e) {
+	// 	socket.emit('OnImageUp', username);
+	// };
 
 	login.onsubmit = function(e) {
 		e.preventDefault();
@@ -689,10 +692,10 @@
 		}
 	}
 
-	leaveroom.onclick = function() {
-		socket.emit("JoinRoom", username, room.value, 'true');
-		inroom = '';
-	}
+	// leaveroom.onclick = function() {
+	// 	socket.emit("JoinRoom", username, room.value, 'true');
+	// 	inroom = '';
+	// }
 
 	socket.on("Connect", function(user) {
 		username = user;
@@ -705,10 +708,10 @@
 		alert("Login Failed - Username or Password is incorrect...");
 	});
 
-	roomform.onsubmit = function(e) {
-		e.preventDefault();
-		socket.emit("JoinRoom", username, room.value, "false");
-	}
+	// roomform.onsubmit = function(e) {
+	// 	e.preventDefault();
+	// 	socket.emit("JoinRoom", username, room.value, "false");
+	// }
 
 	textform.onsubmit = function(e) {
 		e.preventDefault();
@@ -793,34 +796,34 @@
 		}
 	});
 
-	socket.on("SendCachedData", function(users, messages) {
+	// socket.on("SendCachedData", function(users, messages) {
+  //
+	// 	for (var i = 0; i < users.length; i++) {
+	// 		chatText.innerHTML += '<div>' + `${users[i]}: ${messages[i]}` + '</div>';
+	// 		chatText.scrollTop = chatText.scrollHeight;
+	// 	}
+	// });
 
-		for (var i = 0; i < users.length; i++) {
-			chatText.innerHTML += '<div>' + `${users[i]}: ${messages[i]}` + '</div>';
-			chatText.scrollTop = chatText.scrollHeight;
-		}
-	});
-
-	socket.on("GetUsers", function(users, friends) {
-		var online = false;
-
-		for (var i = 0; i < users.length; i++) {
-			users[i] = " " + users[i]
-		}
-
-		connected.innerHTML = users;
-	});
+	// socket.on("GetUsers", function(users, friends) {
+	// 	var online = false;
+  //
+	// 	for (var i = 0; i < users.length; i++) {
+	// 		users[i] = " " + users[i]
+	// 	}
+  //
+	// 	connected.innerHTML = users;
+	// });
 
 	socket.on('disconnect', function(reason) {
 		alert(`You have been disconnected due to ${reason}`);
 		document.location.reload();
 	});
 
-	socket.on("GetRooms", function(rooms) {
-		for (var i = 0; i < rooms.length; i++) {
-			rooms[i] = " " + rooms[i]
-		}
-	});
+	// socket.on("GetRooms", function(rooms) {
+	// 	for (var i = 0; i < rooms.length; i++) {
+	// 		rooms[i] = " " + rooms[i]
+	// 	}
+	// });
 
 	window.onbeforeunload = function (e) {
 		return;

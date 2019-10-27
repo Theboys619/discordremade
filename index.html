@@ -740,8 +740,12 @@
 	};
 
 	socket.on("SendMessageToClients", function(user, msg) {
-		chatText.innerHTML += '<div>' + user + ": " + msg + '</div>';
-		chatText.scrollTop = chatText.scrollHeight;
+    if (user === "Server") {
+			chatText.innerHTML += '<div class="flex mx-6 my-3 py-4 border-t border-gray-700"><div class="flex-none"><a href="https://mpng.pngfly.com/20180320/iae/kisspng-brand-logo-circle-terminal-5ab0c999d6c656.8646870115215353858797.jpg"><img src="https://mpng.pngfly.com/20180320/iae/kisspng-brand-logo-circle-terminal-5ab0c999d6c656.8646870115215353858797.jpg" class="w-10 h-10 rounded-full"></img></a></div><div class="ml-5"><div><a href="#" class="text-white hover:underline">' + user + "</a></div><div><div>" + msg + '</div></div></div></div>';
+		} else {
+			chatText.innerHTML += '<div class="flex mx-6 my-3 py-4 border-t border-gray-700"><div class="ml-5"><div><a href="#" class="text-white hover:underline">' + user + "</a></div><div><div>" + msg + '</div></div></div></div>';
+			chatText.scrollTop = chatText.scrollHeight;
+		}
 	});
 
 	socket.on("SendPMessage", function(user, msg) {
@@ -779,10 +783,10 @@
 		alert("Successfully Joined Room " + inroom + "!");
 	});
 
-	socket.on("Error", function(errortype, msg, user) {
+  socket.on("Error", function(errortype, msg, user) {
 		if (errortype === "Unknown User") {
-			chatText.innerHTML += '<div>' + "Server: " + msg + '</div>';
-			chatText.scrollTop = chatText.scrollHeight;
+			chatText.innerHTML += '<div class="flex mx-6 my-3 py-4 border-t border-gray-700"><div class="flex-none"><a href="https://mpng.pngfly.com/20180320/iae/kisspng-brand-logo-circle-terminal-5ab0c999d6c656.8646870115215353858797.jpg"><img src="https://mpng.pngfly.com/20180320/iae/kisspng-brand-logo-circle-terminal-5ab0c999d6c656.8646870115215353858797.jpg" class="w-10 h-10 rounded-full"></img></a></div><div class="ml-5"><div><a href="#" class="text-white hover:underline">' + "Server" + "</a></div><div><div>" + msg + '</div></div></div></div>';
+			//chatText.scrollTop = chatText.scrollHeight;
 		} else if (errortype === "Login Fail") {
 			alert(msg);
 		} else if (errortype === "Successful Register") {
@@ -792,7 +796,7 @@
 		} else if (errortype === "Friend") {
 			alert(msg);
 		} else if (errortype === "Disconnect") {
-			chatText.innerHTML += `<div>Server: ${msg}</div>`;
+			chatText.innerHTML += '<div class="flex mx-6 my-3 py-4 border-t border-gray-700"><div class="ml-5"><div><a href="#" class="text-white hover:underline">' + "Server" + "</a></div><div><div>" + msg + '</div></div></div></div>';
 			alert(msg);
 		}
 	});

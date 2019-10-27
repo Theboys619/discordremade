@@ -3,7 +3,6 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var firebase = require('firebase');
 var multer = require('multer');
-var ejs = require('ejs');
 var port = 65515;
 
 var firebaseConfig = {

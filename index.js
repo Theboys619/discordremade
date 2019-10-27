@@ -31,7 +31,7 @@ app.get('/', function (req, res) {
 
 //Upload File Images
 
-app.get('/imgs/favicon.ico', function (reg, res) {
+app.get('/imgs/favicon.ico', function (req, res) {
 	res.sendFile(__dirname + '/imgs/favicon.ico');
 });
 
@@ -39,8 +39,12 @@ app.get('/imgs/BGImg.png', function (req, res) {
 	res.sendFile('/imgs/BGImg.png', {root: '.'});
 });
 
-app.get('/imgs/privatechat.png', function (reg, res) {
+app.get('/imgs/privatechat.png', function (req, res) {
 	res.sendFile('/imgs/privatechat.png', {root: '.'});
+});
+
+app.get('/public/stylesheets/style.css', function (req, res) {
+  res.sendFile('/public/stylesheets/style.css', {root: '.'});
 });
 
 // Start of Uploading
